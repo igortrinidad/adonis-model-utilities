@@ -1,0 +1,33 @@
+{
+  "name": "adonis-models-utilities",
+  "version": "1.0.0",
+  "description": "A set of tools to use within AdonisJS models",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.2.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igortrinidad/adonis-model-utilities.git"
+  },
+  "keywords": [
+    "adonis",
+    "string",
+    "model",
+    "trait",
+    "hook",
+    "helpers",
+    "adonis-models-utilities"
+  ],
+  "author": "Igor Trindade <igortrindade.dev>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/igortrinidad/adonis-model-utilities/issues"
+  },
+  "homepage": "https://github.com/igortrinidad/adonis-model-utilities#readme"
+}
