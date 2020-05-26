@@ -95,7 +95,7 @@ class User {
     /**
      * add trait FormatDateAttributes
     */
-    this.addTrait('@provider:FormatDataAttributes', {unformatted: 'YYYY-MM-DD', formatted: 'DD/MM/YY'})
+    this.addTrait('@provider:FormatDateAttributes', {unformatted: 'YYYY-MM-DD', formatted: 'DD/MM/YY'})
   }
   
   /**
@@ -172,6 +172,29 @@ class UserSchema extends Schema {
 * [Adonis](http://adonisjs.com)
 * [Moment](http://momentjs.com)
 * [Accounting](http://openexchangerates.github.io/accounting.js/)
+
+
+
+## Test
+
+```bash
+  git clone https://github.com/igortrinidad/adonis-model-utilities.git
+  cd adonis-model-utilities/example
+  npm install
+  adonis key:generate
+  adonis test
+```
+
+##### Or over the browser
+```bash
+  git clone https://github.com/igortrinidad/adonis-model-utilities.git
+  cd adonis-model-utilities/example
+  npm install
+  adonis key:generate
+  adonis serve
+```
+
+##### Just access the root route of the application running and check the return of the model created with traits
 
 
 ## Author
