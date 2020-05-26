@@ -11,7 +11,7 @@ $ adonis install adonis-model-utilities
 
 ## 2. Register provider
 
-Once you have installed adonis-cast-attributes, make sure to register the provider inside `start/app.js` in order to make use of it.
+Once you have installed adonis-model-utilities, make sure to register the provider inside `start/app.js` in order to make use of it.
 
 ```js
 const providers = [
