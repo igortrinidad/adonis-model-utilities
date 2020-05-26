@@ -45,6 +45,8 @@ class User {
 }
 ```
 
+##### this trait apply a setter on defined fields so all fields will be saved with Title Case (first char uppercase for each word of the string)
+
 ### Format Currency Trait:
 
 Add trait to the model and set the fields that should be formatted:
@@ -68,7 +70,8 @@ class Product {
 
 }
 ```
-##### This trait apply or add computed properties for the model, not changing the original field
+##### This trait apply add computed property (virtual) for the model, not changing the original field with prefix "formatted" eg: formattedPrice: "R$ 105,45"
+
 ###### Trait options (*optional)
 
 ```js
@@ -114,9 +117,6 @@ class User {
 }
 ```
 
-##### You can set the trait to only apply the getter, setter or both to the field
-##### This trait shouldnt be used on created_at and updated_at columns or dates setted using AdonisJS dates mutator
-
 ###### Trait options (*optional)
 
 ```js
@@ -127,9 +127,14 @@ class User {
 
 ```
 
+##### You can set the trait to only apply the getter, setter or both to the field before save on the db or fetch the data
+
+##### This trait shouldn't be used on created_at and updated_at columns or dates setted using AdonisJS dates mutator
+
+
 ### Uuid hook:
 
-Add trait to the model and set the fields that should be formatted:
+Add hook to the model that will make a new model instance with id `node uuid v4`
 ```js
 class User {
 
@@ -152,7 +157,7 @@ class User {
 }
 ```
 
-#### Example of migration using UUID
+#### Example of migration using Uuid Hook
 ```js
 class UserSchema extends Schema {
   up () {
@@ -166,6 +171,8 @@ class UserSchema extends Schema {
 }
 
 ```
+
+##### This hook create an model instance with id `node uuid v4` string
 
 ## Built With
 
