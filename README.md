@@ -76,6 +76,7 @@ class Product {
 
 ```js
   {
+    prefix: "formatted", //defaul model attribute prefix like formattedValue
     symbol : "US$ ",   // default currency symbol is '$'
     format: "%s%v", // controls output: %s = symbol, %v = value/number (can be object: see below)
     decimal : ",",  // decimal point separator
@@ -182,7 +183,15 @@ class UserSchema extends Schema {
 
 
 
-## Test
+## Test functional (using Japa Tests)
+
+```bash
+  git clone https://github.com/igortrinidad/adonis-model-utilities.git
+  npm install
+  node japa-tests
+```
+
+## Test Adonis integrations
 
 ```bash
   git clone https://github.com/igortrinidad/adonis-model-utilities.git
@@ -219,6 +228,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Changelog
 
-- v1.0.0
+- v1.0.4
   - Initial release.
+  - Added model attribute prefix option for formatCurrency
+  - Added functional tests using Japa Tests
+  - Abstracted titleCase map function
   

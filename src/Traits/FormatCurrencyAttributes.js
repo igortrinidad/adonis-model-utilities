@@ -9,11 +9,7 @@ class FormatCurrencyAttributes {
   register (Model, customOptions) {
 
     const accountingOptions = {
-      symbol : "US$ ",   // default currency symbol is '$'
-      format: "%s%v", // controls output: %s = symbol, %v = value/number (can be object: see below)
-      decimal : ",",  // decimal point separator
-      thousand: ".",  // thousands separator
-      precision : 2   // decimal places
+      prefix: "formatted" //
     }
 
     Object.assign(accountingOptions, customOptions)
@@ -29,14 +25,14 @@ class FormatCurrencyAttributes {
    */
   addGetters (Model, accountingOptions) {
 
-  
+
     if(typeof(Model.currencies) === 'object') {
 
       Model.currencies.map((attr) => {
 
         if(typeof(attr) == 'string') {
           const getter = util.getGetterName(attr).replace('get', 'getFormatted')
-          const computedGetter = `formatted${titleCaseString(attr)}`
+          const computedGetter = `${accountingOptions.prefix}${titleCaseString(attr)}`
           if (typeof Model.prototype[getter] !== 'function') {
             Model.prototype[getter] = this.getter(attr, accountingOptions)
           }

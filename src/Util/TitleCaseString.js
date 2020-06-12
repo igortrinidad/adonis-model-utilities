@@ -1,5 +1,6 @@
 const titleCaseString = (str) => {
-  return str.toString().toUpperCase().charAt(0) + str.substring(1).toLowerCase()
+  return str.toString().split(' ').map((str) => str.toUpperCase().charAt(0) + str.substring(1).toLowerCase()).join(' ')
 }
+
 
 module.exports = titleCaseString

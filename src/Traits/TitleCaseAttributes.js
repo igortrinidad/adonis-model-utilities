@@ -35,7 +35,7 @@ class TitleCaseAttributes {
    */
   setter (attr) {
     return (value) => {
-      return value.split(' ').map((str) => titleCaseString(str)).join(' ')
+      return titleCaseString(value)
     }
   }
 }
