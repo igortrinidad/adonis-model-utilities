@@ -9,7 +9,8 @@
   "dependencies": {
     "accounting": "^0.4.1",
     "lodash": "^4.17.15",
-    "moment": "^2.2.6"
+    "moment": "^2.2.6",
+    "uuid": "^8.1.0"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
     "japa-cli": "^1.0.1",
     "mysql": "^2.18.1",
     "pg": "^8.2.1",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^4.2.0",
+    "uuid-validate": "0.0.3"
   }
 }

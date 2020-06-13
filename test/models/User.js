@@ -1,30 +1,18 @@
 module.exports = (Model) => {
   class User extends Model {
 
-    static get fullNameAttribute () {
-      return {
-        fullName: 'fullName',
-        firstName: 'firstName',
-        lastName: 'lastName'
-      }
-    }
-
-    static get titleCases () {
-      return ['name']
-    }
-
     static boot () {
       super.boot()
 
       /**
        * Uuid trait
        */
-      this.addTrait('@provider:IgorTrinidad/Uuid', { field: 'id'})
-
+      this.addTrait('@provider:IgorTrinidad/Uuid', { field: 'id', version: 'v4'})
+      
       /**
-       * Format currency trait
+       * First Name
        */
-      this.addTrait('@provider:IgorTrinidad/FormatCurrency')
+      this.addTrait('@provider:IgorTrinidad/TitleCase', { fields: ['firstName', 'lastName'] })
 
       /**
        * FullName trait

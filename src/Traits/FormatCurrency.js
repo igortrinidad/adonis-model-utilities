@@ -1,68 +1,85 @@
 'use strict'
 
+/**
+ * adonis-model-utilities
+ *
+ * (c) Igor Trindade <igortrindade.me@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+*/
+
 const util = require('@adonisjs/lucid/lib/util')
+const cloneDeep = require('lodash/cloneDeep')
 const formatCurrency = require('../Util/FormatCurrency')
 const titleCaseString = require('../Util/TitleCaseString')
+const GE = require('@adonisjs/generic-exceptions')
 
 class FormatCurrency {
 
-  register (Model, customOptions) {
+  register (Model, options) {
 
-    const accountingOptions = {
-      prefix: "formatted" //
+    if (!options || typeof (options) !== 'object') {
+      throw GE.InvalidArgumentException.invalidParameter('Make sure to pass options [object] as 2nd parameter to IgorTrindade/FormatCurrency trait')
     }
 
-    Object.assign(accountingOptions, customOptions)
+    if (!options.fields) {
+      throw GE.InvalidArgumentException.invalidParameter('Make sure to pass options.fields array of string parameter to IgorTrindade/FormatCurrency trait')
+    }
+    
+    options.fields.map((field) => {
+      if(typeof(field) !== 'string') {
+        throw GE.InvalidArgumentException.invalidParameter('Make sure to pass fields an array of string to fields parameter on IgorTrindade/FormatCurrency trait')
+      }
+    })
+
+    const accountingOptions = {
+      prefix: "formatted" // default prefix for the virtual value
+    }
+
+    Object.assign(accountingOptions, options)
 
     this.addGetters(Model, accountingOptions)
+
   }
 
   /**
    * Add getters to model for each casted attribute
    *
    * @param Model
-   * @param accountingOptions
+   * @param options
    */
-  addGetters (Model, accountingOptions) {
+  addGetters (Model, options) {
 
+    options.fields.map((attr) => {
 
-    if(typeof(Model.currencies) === 'object') {
+      const getter = util.getGetterName(attr).replace('get', 'getFormatted')
+      const computedGetter = `${options.prefix}${titleCaseString(attr)}`
+      
+      if (typeof Model.prototype[getter] !== 'function') {
+        Model.prototype[getter] = this.getter(attr, options)
+      }
 
-      Model.currencies.map((attr) => {
+      if(typeof(Model.computed) == 'undefined') {
 
-        if(typeof(attr) == 'string') {
-          const getter = util.getGetterName(attr).replace('get', 'getFormatted')
-          const computedGetter = `${accountingOptions.prefix}${titleCaseString(attr)}`
-          if (typeof Model.prototype[getter] !== 'function') {
-            Model.prototype[getter] = this.getter(attr, accountingOptions)
+        const injectComputedInModel = {
+          get computed() {
+            return [computedGetter]
           }
-
-          if(typeof(Model.computed) == 'undefined') {
-
-            const injectComputedInModel = {
-              get computed() {
-                return [computedGetter]
-              }
-            }
-
-            Object.assign(Model, injectComputedInModel)
-
-          } else {
-
-            const modelComputed = JSON.parse(JSON.stringify(Model.computed))
-
-            modelComputed.push(computedGetter)
-
-            Object.defineProperty (Model, "computed", {
-              get: () => modelComputed,
-            })
-
-          }
-
         }
-      })
+        Object.assign(Model, injectComputedInModel)
 
-    }
+      } else {
+
+        const modelComputed = cloneDeep(Model.computed)
+        modelComputed.push(computedGetter)
+        Object.defineProperty (Model, "computed", {
+          get: () => modelComputed,
+        })
+
+      }
+
+    })
 
   }
 
@@ -70,9 +87,9 @@ class FormatCurrency {
    * Setter method
    * @returns {string}
    */
-  getter (attr, accountingOptions) {
+  getter (attr, options) {
     return (model) => {
-      return formatCurrency(model[attr], accountingOptions)
+      return formatCurrency(model[attr], options)
     }
   }
 }

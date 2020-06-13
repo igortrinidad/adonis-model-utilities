@@ -26,7 +26,7 @@ test.group('Functional', (group) => {
 
   })
 
-  test('It should return the fullName a given firstName and lastName', (assert) => {
+  test('It should return the fullName for a given firstName and lastName', (assert) => {
 
     assert.equal(createFullName('igoR', 'TrINDADE'), 'Igor Trindade')
 

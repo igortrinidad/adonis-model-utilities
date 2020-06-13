@@ -21,51 +21,108 @@ const providers = [
 
 ## 3. Use:
 
-### Title Case Trait:
+### Uuid Trait:
 
-Add trait to the model and set the field that should be TitleCase:
+Add trait to the model that will make a new model instance using `node uuid`
 ```js
 class User {
+
   static super () {
     super.boot()
 
     /**
-     * add trait TitleCaseAttributes
-    */
-    this.addTrait('@provider:TitleCaseAttributes')
-  }
-  
-  /**
-   * add getter titleCases to inform trait what fields that should be treated
-  */
-  static get titleCases () {
-    return ['name', 'lastName']
+     * Uuid trait
+     */
+    this.addTrait('@provider:IgorTrinidad/Uuid', { field: 'id', version: 'v4'})
   }
 
 }
 ```
 
-##### this trait apply a setter on defined fields so all fields will be saved with Title Case (first char uppercase for each word of the string)
+##### This trait create an model instance with id `node uuid v4` string
+##### You can change the uuid version to `v1, v3, v4 or v5`.
+
+
+#### Example of migration using Uuid Hook
+```js
+class UserSchema extends Schema {
+  up () {
+    this.create('users', (table) => {
+      table.uuid('id').index().unique().notNullable()
+    })
+  }
+  down () {
+    this.drop('users')
+  }
+}
+
+```
+
+### Password Hash Trait:
+
+Add trait to the model and set the field that should apply the Hash method of own Adonis framework:
+```js
+class User {
+
+  static super () {
+    super.boot()
+
+    /**
+     * PasswordHash trait
+     */
+    this.addTrait('@provider:IgorTrinidad/PasswordHash', {field: 'password'})
+  }
+
+}
+```
+
+###### this model above is exactly same as:
+
+```js
+
+/** @type {import('@adonisjs/framework/src/Hash')} */
+const Hash = use('Hash')
+
+class User extends Model {
+
+  static get hidden () {
+    return ['password']
+  }
+
+  static boot () {
+    super.boot()
+    /**
+     * A hook to hash the user password before saving
+     * it to the database.
+     */
+    this.addHook('beforeSave', async (userInstance) => {
+      if (userInstance.dirty.password) {
+        userInstance.password = await Hash.make(userInstance.password)
+      }
+    })
+
+  }
+
+}
+
+module.exports = User
+
+```
+
 
 ### Format Currency Trait:
 
 Add trait to the model and set the fields that should be formatted:
 ```js
 class Product {
+
   static super () {
     super.boot()
 
     /**
-     * add trait FormatCurrencyAttributes
-    */
-    this.addTrait('@provider:FormatCurrencyAttributes', {symbol: 'R$ '})
-  }
-  
-  /**
-   * add getter currencies to inform trait what fields that should apply the trait
-  */
-  static get currencies () {
-    return ['price']
+     * Format currency trait
+     */
+    this.addTrait('@provider:IgorTrinidad/FormatCurrency', {fields: ['value'], prefix: 'formatted', symbol: 'US$ '})
   }
 
 }
@@ -86,34 +143,21 @@ class Product {
 
 ```
 
-
-
 ### Format Date Trait:
 
 Add trait to the model and set the fields that should be formatted:
 ```js
 class User {
+
   static super () {
     super.boot()
 
     /**
-     * add trait FormatDateAttributes
-    */
-    this.addTrait('@provider:FormatDateAttributes', {unformatted: 'YYYY-MM-DD', formatted: 'DD/MM/YY'})
+     * Format date trait
+     */
+    this.addTrait('@provider:IgorTrinidad/FormatDate', {fields: ['bday'], unformatted: 'YYYY-MM-DD',formatted: 'DD/MM/YYYY'})
   }
   
-  /**
-   * add getter currencies to inform trait what fields that should apply the trait
-  */
-  static get formattedDates () {
-    return [
-      {
-        field: 'bday',
-        setter: true,
-        getter: true 
-      }
-    ]
-  }
 
 }
 ```
@@ -122,8 +166,11 @@ class User {
 
 ```js
   {
-    unformatted: 'YYYY-MM-DD',
-    formatted: 'DD/MM/YYYY'
+    fields: ['bday'],
+    unformatted: 'YYYY-MM-DD', //*optional
+    formatted: 'DD/MM/YYYY', //*optional
+    setter: true, //*optional
+    getter: true //*optional
   }
 
 ```
@@ -132,10 +179,9 @@ class User {
 
 ##### This trait shouldn't be used on created_at and updated_at columns or dates setted using AdonisJS dates mutator
 
+### Title Case Trait:
 
-### Uuid hook:
-
-Add hook to the model that will make a new model instance with id `node uuid v4`
+Add trait to the model and set the field that should be TitleCase:
 ```js
 class User {
 
@@ -143,37 +189,41 @@ class User {
     super.boot()
 
     /**
-     * Add uuid generate hook
+     * Title case
      */
-    this.addHook('beforeCreate', '@provider:UuidHook.id')
-  }
-  
-  /**
-  * Set incrementing to false to inform Adonis to not increment the id field
-  */
-  static get incrementing () {
-    return false
+    this.addTrait('@provider:IgorTrinidad/TitleCase', { fields: ['firstName', 'lastName'] })
   }
 
 }
 ```
 
-#### Example of migration using Uuid Hook
+##### this trait apply a setter on defined fields so all fields will be saved with Title Case (first char uppercase for each word of the string)
+
+
+### FullName Trait:
+
+Add trait to the model and set the trait options:
 ```js
-class UserSchema extends Schema {
-  up () {
-    this.create('users', (table) => {
-      table.uuid('id').index().unique().notNullable()
+class User {
+
+  static super () {
+    super.boot()
+
+    /**
+     * FullName trait
+     */
+    this.addTrait('@provider:IgorTrinidad/FullName', {
+      fullName: 'fullName',
+      firstName: 'firstName',
+      lastName: 'lastName'
     })
   }
-  down () {
-    this.drop('users')
-  }
-}
 
+}
 ```
 
-##### This hook create an model instance with id `node uuid v4` string
+##### this trait apply a setter to the column formating the fullName for the on saving
+
 
 ## Built With
 
@@ -188,10 +238,10 @@ class UserSchema extends Schema {
 ```bash
   git clone https://github.com/igortrinidad/adonis-model-utilities.git
   npm install
-  node japa-tests
+  DB=sqlite node japa-tests
 ```
 
-## Test Adonis integrations
+## Test Adonis integration
 
 ```bash
   git clone https://github.com/igortrinidad/adonis-model-utilities.git
@@ -200,17 +250,6 @@ class UserSchema extends Schema {
   adonis key:generate
   adonis test
 ```
-
-##### Or over the browser
-```bash
-  git clone https://github.com/igortrinidad/adonis-model-utilities.git
-  cd adonis-model-utilities/example
-  npm install
-  adonis key:generate
-  adonis serve
-```
-
-##### Just access the root route of the application running and check the return of the model created with traits
 
 
 ## Author
@@ -228,9 +267,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Changelog
 
-- v1.0.4
+- v1.2.0
   - Initial release.
   - Added model attribute prefix option for formatCurrency
   - Added functional tests using Japa Tests
   - Abstracted titleCase map function
+  - Added FullName trait
+  - Breaking changes: simplified all traits options inside trait function, changed UuidHook to trait, removed getters from models
   

@@ -1,58 +1,34 @@
-'use strict'
+module.exports = (Model) => {
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model')
+  class Product extends Model {
 
-class Product extends Model {
+    static boot () {
+      super.boot()
 
-  static get incrementing () {
-    return false
-  }
+      /**
+       * Uuid trait
+       */
+      this.addTrait('@provider:IgorTrinidad/Uuid', { field: 'id'})
 
-  static get titleCases () {
-    return ['name']
-  }
+      /**
+       * Title case
+       */
+      this.addTrait('@provider:IgorTrinidad/TitleCase', { fields: ['title'] })
 
-  static get currencies () {
-    return ['value']
-  }
+      /**
+       * Format currency trait
+       */
+      this.addTrait('@provider:IgorTrinidad/FormatCurrency', {fields: ['value'], prefix: 'formatted', symbol: 'US$ '})
 
-  static get formattedDates () {
-    return [
-      {
-        field: 'availableAt',
-        setter: true,
-        getter: true
-      }
-    ]
-  }
+      /**
+       * Format date trait
+       */
+      this.addTrait('@provider:IgorTrinidad/FormatDate', {fields: ['availableAt'], unformatted: 'YYYY-MM-DD', formatted: 'DD/MM/YYYY', setter: false})
 
-  static boot () {
-    super.boot()
-
-    /**
-     * Add uuid generate hook
-     */
-    this.addHook('beforeCreate', '@provider:UuidHook.id')
-
-    /**
-     * Format currency trait - only getter
-     */
-    this.addTrait('@provider:TitleCaseAttributes')
-
-    /**
-     * Format currency trait - only getter
-     */
-    this.addTrait('@provider:FormatCurrencyAttributes', {symbol: 'R$ '})
-
-    /**
-     * Format currency trait - only getter
-     */
-    this.addTrait('@provider:FormatDateAttributes')
-
+    }
 
   }
+  Product._bootIfNotBooted()
 
+  return Product
 }
-
-module.exports = Product

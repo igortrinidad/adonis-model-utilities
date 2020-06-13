@@ -1,20 +1,45 @@
 'use strict'
 
+/**
+ * adonis-model-utilities
+ *
+ * (c) Igor Trindade <igortrindade.me@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+*/
+
 const util = require('@adonisjs/lucid/lib/util')
 const formatDate = require('../Util/FormatDate')
 
 class FormatDate {
 
-  register (Model, customOptions = {}) {
+  register (Model, options = {}) {
 
-    const formatOptions = {
-      unformatted: 'YYYY-MM-DD',
-      formatted: 'DD/MM/YYYY'
+    if (!options || typeof (options) !== 'object') {
+      throw GE.InvalidArgumentException.invalidParameter('Make sure to pass options [object] as 2nd parameter to IgorTrindade/FormatDate trait')
     }
 
-    Object.assign(formatOptions, customOptions)
+    if (!options.fields) {
+      throw GE.InvalidArgumentException.invalidParameter('Make sure to pass options.fields array of string parameter to IgorTrindade/FormatDate trait')
+    }
+    
+    options.fields.map((field) => {
+      if(typeof(field) !== 'string') {
+        throw GE.InvalidArgumentException.invalidParameter('Make sure to pass fields an array of string to fields parameter on IgorTrindade/FormatDate trait')
+      }
+    })
 
-    this.addSetters(Model, formatOptions)
+    const formatDateOptions = {
+      unformatted: 'YYYY-MM-DD',
+      formatted: 'DD/MM/YYYY',
+      getter: true,
+      setter: true
+    }
+
+    Object.assign(formatDateOptions, options)
+
+    this.addSetters(Model, formatDateOptions)
   }
 
   /**
@@ -23,31 +48,27 @@ class FormatDate {
    * @param Model
    * @param accountingOptions
    */
-  addSetters (Model, formatOptions) {
+  addSetters (Model, formatDateOptions) {
 
-    if(typeof(Model.formattedDates) === 'object') {
+    formatDateOptions.fields.map((attr) => {
 
-      Model.formattedDates.map((attr) => {
+      if(attr.field === 'created_at' || attr.field === 'updated_at') return
 
-        if(attr.field === 'created_at' || attr.field === 'updated_at') return
-
-        if(attr.setter == 'undefined' || attr.setter) {
-          const setter = util.getSetterName(attr.field)
-          if (typeof Model.prototype[setter] !== 'function') {
-            Model.prototype[setter] = this.setter(formatOptions)
-          }
+      if(formatDateOptions.setter) {
+        const setter = util.getSetterName(attr.field)
+        if (typeof Model.prototype[setter] !== 'function') {
+          Model.prototype[setter] = this.setter(formatDateOptions)
         }
+      }
 
-        if(attr.getter == 'undefined' || attr.getter) {
-          const getter = util.getGetterName(attr.field)
-          if (typeof Model.prototype[getter] !== 'function') {
-            Model.prototype[getter] = this.getter(formatOptions)
-          }
+      if(formatDateOptions.getter) {
+        const getter = util.getGetterName(attr.field)
+        if (typeof Model.prototype[getter] !== 'function') {
+          Model.prototype[getter] = this.getter(formatDateOptions)
         }
+      }
 
-      })
-
-    }
+    })
 
   }
 

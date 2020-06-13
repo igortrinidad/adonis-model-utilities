@@ -5,51 +5,28 @@ const Model = use('Model')
 
 class Product extends Model {
 
-  static get incrementing () {
-    return false
-  }
-
-  static get titleCases () {
-    return ['name']
-  }
-
-  static get currencies () {
-    return ['value']
-  }
-
-  static get formattedDates () {
-    return [
-      {
-        field: 'availableAt',
-        setter: true,
-        getter: true
-      }
-    ]
-  }
-
   static boot () {
     super.boot()
 
     /**
-     * Add uuid generate hook
+     * Uuid trait
      */
-    this.addHook('beforeCreate', '@provider:UuidHook.id')
+    this.addTrait('@provider:IgorTrinidad/Uuid', { field: 'id'})
 
     /**
-     * Format currency trait - only getter
+     * Title case
      */
-    this.addTrait('@provider:TitleCaseAttributes')
+    this.addTrait('@provider:IgorTrinidad/TitleCase', { fields: ['title'] })
 
     /**
-     * Format currency trait - only getter
+     * Format currency trait
      */
-    this.addTrait('@provider:FormatCurrencyAttributes', {symbol: 'R$ '})
+    this.addTrait('@provider:IgorTrinidad/FormatCurrency', {fields: ['value'], prefix: 'formatted', symbol: 'US$ '})
 
-    /**
-     * Format currency trait - only getter
+      /**
+     * Format date trait
      */
-    this.addTrait('@provider:FormatDateAttributes')
-
+    this.addTrait('@provider:IgorTrinidad/FormatDate', {field: 'availableAt', unformatted: 'YYYY-MM-DD', formatted: 'DD/MM/YYYY'})
 
   }
 

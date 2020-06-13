@@ -20,14 +20,14 @@ class ModelUtilitiesProvider extends ServiceProvider {
     })
     this.app.alias('Adonis/Traits/IgorTrinidad/FormatCurrency', 'IgorTrinidad/FormatCurrency')
 
-    // Trait getter and setter format dates attributes
+    // Format Date Trait
     this.app.singleton('Adonis/Traits/IgorTrinidad/FormatDate', () => {
       const FormatDate = require('../src/Traits/FormatDate')
       return new FormatDate()
     })
     this.app.alias('Adonis/Traits/IgorTrinidad/FormatDate', 'IgorTrinidad/FormatDate')
 
-    // Trait Uuid
+    // Uuid trait
     this.app.singleton('Adonis/Traits/IgorTrinidad/Uuid', () => {
       const Uuid = require('../src/Traits/Uuid')
       return new Uuid()
@@ -35,11 +35,18 @@ class ModelUtilitiesProvider extends ServiceProvider {
     this.app.alias('Adonis/Traits/IgorTrinidad/Uuid', 'IgorTrinidad/Uuid')
 
     //FullName
-    this.app.bind('Adonis/Addons/IgorTrinidadFullName', () => {
+    this.app.singleton('Adonis/Addons/IgorTrinidadFullName', () => {
       const FullName = require('../src/Traits/FullName')
       return new FullName()
     })
     this.app.alias('Adonis/Addons/IgorTrinidadFullName', 'IgorTrinidad/FullName')
+
+    //PasswordHash
+    this.app.singleton('Adonis/Addons/IgorTrinidadPasswordHash', () => {
+      const PasswordHash = require('../src/Traits/PasswordHash')
+      return new PasswordHash()
+    })
+    this.app.alias('Adonis/Addons/IgorTrinidadPasswordHash', 'IgorTrinidad/PasswordHash')
 
   }
 }

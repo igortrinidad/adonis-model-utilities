@@ -1,9 +1,9 @@
 'use strict'
 
 /**
- * adonis-lucid-slug
+ * adonis-model-utilities
  *
- * (c) Harminder Virk <virk@adonisjs.com>
+ * (c) Igor Trindade <igortrindade.me@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,13 +25,14 @@ const createFullName = require('../Util/CreateFullName')
  * @param {String} options.lastName
  */
 class FullName {
+
   register (Model, options) {
     if (!options || typeof (options) !== 'object') {
       throw GE.InvalidArgumentException.invalidParameter('Make sure to pass options object as 2nd parameter to IgorTrindade/FullName trait')
     }
 
     /**
-     * FullName
+     * fullName, firstName, lastName
      */
     const fullName = options.fullName
     const firstName = options.firstName
@@ -52,7 +53,6 @@ class FullName {
       modelInstance.$attributes[fullName] = createFullName(modelInstance.$attributes[firstName], modelInstance.$attributes[lastName])
 
     })
-
 
   }
 }
