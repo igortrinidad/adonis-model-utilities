@@ -4,7 +4,7 @@
   "description": "A set of tools to use within AdonisJS models",
   "main": " ",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "DB=sqlite japa"
   },
   "dependencies": {
     "accounting": "^0.4.1",
@@ -31,6 +31,13 @@
   },
   "homepage": "https://github.com/igortrinidad/adonis-model-utilities#readme",
   "devDependencies": {
-    "japa": "^3.1.1"
+    "@adonisjs/fold": "^4.0.9",
+    "@adonisjs/lucid": "^6.1.3",
+    "@adonisjs/sink": "^1.0.17",
+    "japa": "^3.1.1",
+    "japa-cli": "^1.0.1",
+    "mysql": "^2.18.1",
+    "pg": "^8.2.1",
+    "sqlite3": "^4.2.0"
   }
 }

@@ -3,7 +3,7 @@
 const util = require('@adonisjs/lucid/lib/util')
 const titleCaseString = require('../Util/TitleCaseString')
 
-class TitleCaseAttributes {
+class TitleCase {
   register (Model) {
     this.addSetters(Model)
   }
@@ -40,4 +40,4 @@ class TitleCaseAttributes {
   }
 }
 
-module.exports = TitleCaseAttributes
+module.exports = TitleCase

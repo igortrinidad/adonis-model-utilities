@@ -7,8 +7,32 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
+
+  static get fullNameAttribute () {
+    return {
+      fullName: 'fullName',
+      firstName: 'firstName',
+      lastName: 'lastName'
+    }
+  }
+
+  static get titleCases () {
+    return ['name']
+  }
+
   static boot () {
     super.boot()
+
+    /**
+     * Format currency trait - only getter
+     */
+    this.addTrait('@provider:TitleCaseAttributes')
+
+    this.addTrait('@provider:IgorTrindade/FullName', {
+      fullName: 'fullName',
+      firstName: 'firstName',
+      lastName: 'lastName'
+    })
 
     /**
      * A hook to hash the user password before saving

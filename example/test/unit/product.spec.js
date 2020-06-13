@@ -1,4 +1,4 @@
-const { test, trait, assert } = use('Test/Suite')('Auth')
+const { test, trait, assert } = use('Test/Suite')('Product')
 const Product = use('App/Models/Product')
 
 trait('Test/ApiClient')
@@ -13,6 +13,6 @@ test('it should create an new product model and apply all traits of the model', 
 
   const newProduct = await Product.create(product)
 
-  console.log(newProduct.toJSON())
+  //console.log(newProduct.toJSON())
 
 })

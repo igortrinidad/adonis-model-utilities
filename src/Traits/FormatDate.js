@@ -3,7 +3,7 @@
 const util = require('@adonisjs/lucid/lib/util')
 const formatDate = require('../Util/FormatDate')
 
-class FormatDateAttributes {
+class FormatDate {
 
   register (Model, customOptions = {}) {
 
@@ -73,4 +73,4 @@ class FormatDateAttributes {
   }
 }
 
-module.exports = FormatDateAttributes
+module.exports = FormatDate

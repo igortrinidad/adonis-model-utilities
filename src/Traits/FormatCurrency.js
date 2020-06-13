@@ -4,7 +4,7 @@ const util = require('@adonisjs/lucid/lib/util')
 const formatCurrency = require('../Util/FormatCurrency')
 const titleCaseString = require('../Util/TitleCaseString')
 
-class FormatCurrencyAttributes {
+class FormatCurrency {
 
   register (Model, customOptions) {
 
@@ -77,4 +77,4 @@ class FormatCurrencyAttributes {
   }
 }
 
-module.exports = FormatCurrencyAttributes
+module.exports = FormatCurrency
