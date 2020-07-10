@@ -23,7 +23,7 @@ class FormatDate {
     if (!options.fields) {
       throw GE.InvalidArgumentException.invalidParameter('Make sure to pass options.fields array of string parameter to IgorTrindade/FormatDate trait')
     }
-    
+
     options.fields.map((field) => {
       if(typeof(field) !== 'string') {
         throw GE.InvalidArgumentException.invalidParameter('Make sure to pass fields an array of string to fields parameter on IgorTrindade/FormatDate trait')
@@ -52,17 +52,17 @@ class FormatDate {
 
     formatDateOptions.fields.map((attr) => {
 
-      if(attr.field === 'created_at' || attr.field === 'updated_at') return
+      if(attr === 'created_at' || attr === 'updated_at') return
 
       if(formatDateOptions.setter) {
-        const setter = util.getSetterName(attr.field)
+        const setter = util.getSetterName(attr)
         if (typeof Model.prototype[setter] !== 'function') {
           Model.prototype[setter] = this.setter(formatDateOptions)
         }
       }
 
       if(formatDateOptions.getter) {
-        const getter = util.getGetterName(attr.field)
+        const getter = util.getGetterName(attr)
         if (typeof Model.prototype[getter] !== 'function') {
           Model.prototype[getter] = this.getter(formatDateOptions)
         }
