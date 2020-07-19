@@ -50,19 +50,19 @@ class FormatDate {
    */
   addSetters (Model, formatDateOptions) {
 
-    formatDateOptions.fields.map((attr) => {
+    formatDateOptions.fields.map((field) => {
 
-      if(attr === 'created_at' || attr === 'updated_at') return
+      if(field === 'created_at' || field === 'updated_at') return
 
       if(formatDateOptions.setter) {
-        const setter = util.getSetterName(attr)
+        const setter = util.getSetterName(field)
         if (typeof Model.prototype[setter] !== 'function') {
           Model.prototype[setter] = this.setter(formatDateOptions)
         }
       }
 
       if(formatDateOptions.getter) {
-        const getter = util.getGetterName(attr)
+        const getter = util.getGetterName(field)
         if (typeof Model.prototype[getter] !== 'function') {
           Model.prototype[getter] = this.getter(formatDateOptions)
         }

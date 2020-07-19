@@ -12,8 +12,9 @@
 const util = require('@adonisjs/lucid/lib/util')
 const cloneDeep = require('lodash/cloneDeep')
 const formatCurrency = require('../Util/FormatCurrency')
-const titleCaseString = require('../Util/TitleCaseString')
 const GE = require('@adonisjs/generic-exceptions')
+const camelCase = require('lodash/camelCase')
+const upperFirst = require('lodash/upperFirst')
 
 class FormatCurrency {
 
@@ -26,7 +27,7 @@ class FormatCurrency {
     if (!options.fields) {
       throw GE.InvalidArgumentException.invalidParameter('Make sure to pass options.fields array of string parameter to IgorTrindade/FormatCurrency trait')
     }
-    
+
     options.fields.map((field) => {
       if(typeof(field) !== 'string') {
         throw GE.InvalidArgumentException.invalidParameter('Make sure to pass fields an array of string to fields parameter on IgorTrindade/FormatCurrency trait')
@@ -54,8 +55,8 @@ class FormatCurrency {
     options.fields.map((attr) => {
 
       const getter = util.getGetterName(attr).replace('get', 'getFormatted')
-      const computedGetter = `${options.prefix}${titleCaseString(attr)}`
-      
+      const computedGetter = `${options.prefix}${upperFirst(camelCase(attr))}`
+
       if (typeof Model.prototype[getter] !== 'function') {
         Model.prototype[getter] = this.getter(attr, options)
       }

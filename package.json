@@ -1,6 +1,6 @@
 {
   "name": "adonis-model-utilities",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A set of tools to use within AdonisJS models",
   "main": " ",
   "scripts": {
