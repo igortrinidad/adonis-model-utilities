@@ -52,13 +52,13 @@ class FormatCurrency {
    */
   addGetters (Model, options) {
 
-    options.fields.map((attr) => {
+    options.fields.map((field) => {
 
-      const getter = util.getGetterName(attr).replace('get', 'getFormatted')
-      const computedGetter = `${options.prefix}${upperFirst(camelCase(attr))}`
+      const getter = util.getGetterName(field).replace('get', 'getFormatted')
+      const computedGetter = `${options.prefix}${upperFirst(camelCase(field))}`
 
       if (typeof Model.prototype[getter] !== 'function') {
-        Model.prototype[getter] = this.getter(attr, options)
+        Model.prototype[getter] = this.getter(field, options)
       }
 
       if(typeof(Model.computed) == 'undefined') {
@@ -88,9 +88,9 @@ class FormatCurrency {
    * Setter method
    * @returns {string}
    */
-  getter (attr, options) {
+  getter (field, options) {
     return (model) => {
-      return formatCurrency(model[attr], options)
+      return formatCurrency(model[field], options)
     }
   }
 }
