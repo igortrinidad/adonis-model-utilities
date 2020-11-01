@@ -87,6 +87,8 @@ test.group('Adonis traits integrations', (group) => {
 
     const newUser = await UserModel.create(userData)
 
+    console.log(newUser)
+
     assert.equal(newUser['firstName'], 'Igor')
     assert.equal(newUser['lastName'], 'Trindade')
 

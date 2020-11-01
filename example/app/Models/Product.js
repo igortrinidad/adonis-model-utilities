@@ -26,7 +26,7 @@ class Product extends Model {
       /**
      * Format date trait
      */
-    this.addTrait('@provider:IgorTrinidad/FormatDate', {field: 'availableAt', unformatted: 'YYYY-MM-DD', formatted: 'DD/MM/YYYY'})
+    this.addTrait('@provider:IgorTrinidad/FormatDate', {fields: ['availableAt'], unformatted: 'YYYY-MM-DD', formatted: 'DD/MM/YYYY'})
 
   }
 

@@ -10,6 +10,7 @@
 */
 
 const GE = require('@adonisjs/generic-exceptions')
+const cloneDeep = require('lodash/cloneDeep')
 
 /** @type {import('@adonisjs/framework/src/Hash')} */
 const Hash = use('Hash')

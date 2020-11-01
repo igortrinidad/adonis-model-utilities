@@ -5,6 +5,12 @@ const Model = use('Model')
 
 class User extends Model {
 
+  static get hidden () {
+    return [
+      'email'
+    ]
+  }
+
   static boot () {
     super.boot()
 

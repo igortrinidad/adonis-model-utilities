@@ -249,6 +249,7 @@ class User {
   npm install
   adonis key:generate
   adonis test
+  adonis test
 ```
 
 
@@ -267,11 +268,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Changelog
 
-- v1.2.0
+- v1.2.3
   - Initial release.
   - Added model attribute prefix option for formatCurrency
   - Added functional tests using Japa Tests
   - Abstracted titleCase map function
   - Added FullName trait
   - Breaking changes: simplified all traits options inside trait function, changed UuidHook to trait, removed getters from models
+  - Fixed missing dependencies on PasswordTrait and FormatDate
   

@@ -11,6 +11,7 @@
 
 const util = require('@adonisjs/lucid/lib/util')
 const formatDate = require('../Util/FormatDate')
+const GE = require('@adonisjs/generic-exceptions')
 
 class FormatDate {
 
