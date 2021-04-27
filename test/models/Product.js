@@ -25,6 +25,11 @@ module.exports = (Model) => {
        */
       this.addTrait('@provider:IgorTrinidad/FormatDate', {fields: ['availableAt'], unformatted: 'YYYY-MM-DD', formatted: 'DD/MM/YYYY', setter: false})
 
+      /**
+       * Parse Number
+       */
+      this.addTrait('@provider:IgorTrinidad/ParseNumber', { fields: ['value'] })
+
     }
 
   }

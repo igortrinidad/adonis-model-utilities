@@ -51,6 +51,10 @@ test.group('Adonis traits integrations', (group) => {
       const FullName = require('../src/Traits/FullName')
       return new FullName()
     })
+    ioc.bind('IgorTrinidad/ParseNumber', () => {
+      const ParseNumber = require('../src/Traits/ParseNumber')
+      return new ParseNumber()
+    })
 
   })
 
@@ -86,8 +90,6 @@ test.group('Adonis traits integrations', (group) => {
     const UserModel = require('./models/User')(Model)
 
     const newUser = await UserModel.create(userData)
-
-    console.log(newUser)
 
     assert.equal(newUser['firstName'], 'Igor')
     assert.equal(newUser['lastName'], 'Trindade')
@@ -137,8 +139,9 @@ test.group('Adonis traits integrations', (group) => {
 
     const newProduct = await ProductModel.create(productData)
 
-
     assert.equal(newProduct.toJSON()['formattedValue'], 'US$ 22,99')
+
+    assert.equal(typeof newProduct.toJSON()['value'], 'number')
 
   })
 

@@ -6,14 +6,28 @@ class ModelUtilitiesProvider extends ServiceProvider {
 
   register () {
 
-    // Trait setter title case attributes
+    // Uuid trait
+    this.app.singleton('Adonis/Traits/IgorTrinidad/Uuid', () => {
+      const Uuid = require('../src/Traits/Uuid')
+      return new Uuid()
+    })
+    this.app.alias('Adonis/Traits/IgorTrinidad/Uuid', 'IgorTrinidad/Uuid')
+
+    //PasswordHash
+    this.app.singleton('Adonis/Addons/IgorTrinidadPasswordHash', () => {
+      const PasswordHash = require('../src/Traits/PasswordHash')
+      return new PasswordHash()
+    })
+    this.app.alias('Adonis/Addons/IgorTrinidadPasswordHash', 'IgorTrinidad/PasswordHash')
+
+    // Trait Title Case attributes
     this.app.singleton('Adonis/Traits/IgorTrinidad/TitleCase', () => {
       const TitleCase = require('../src/Traits/TitleCase')
       return new TitleCase()
     })
     this.app.alias('Adonis/Traits/IgorTrinidad/TitleCase', 'IgorTrinidad/TitleCase')
 
-    // Trait getter format currencies attributes
+    // Trait Format Currency
     this.app.singleton('Adonis/Traits/IgorTrinidad/FormatCurrency', () => {
       const FormatCurrency = require('../src/Traits/FormatCurrency')
       return new FormatCurrency()
@@ -27,12 +41,12 @@ class ModelUtilitiesProvider extends ServiceProvider {
     })
     this.app.alias('Adonis/Traits/IgorTrinidad/FormatDate', 'IgorTrinidad/FormatDate')
 
-    // Uuid trait
-    this.app.singleton('Adonis/Traits/IgorTrinidad/Uuid', () => {
-      const Uuid = require('../src/Traits/Uuid')
-      return new Uuid()
+    // Parse Number Trait
+    this.app.singleton('Adonis/Traits/IgorTrinidad/ParseNumber', () => {
+      const ParseNumber = require('../src/Traits/ParseNumber')
+      return new ParseNumber()
     })
-    this.app.alias('Adonis/Traits/IgorTrinidad/Uuid', 'IgorTrinidad/Uuid')
+    this.app.alias('Adonis/Traits/IgorTrinidad/ParseNumber', 'IgorTrinidad/ParseNumber')
 
     //FullName
     this.app.singleton('Adonis/Addons/IgorTrinidadFullName', () => {
@@ -40,13 +54,6 @@ class ModelUtilitiesProvider extends ServiceProvider {
       return new FullName()
     })
     this.app.alias('Adonis/Addons/IgorTrinidadFullName', 'IgorTrinidad/FullName')
-
-    //PasswordHash
-    this.app.singleton('Adonis/Addons/IgorTrinidadPasswordHash', () => {
-      const PasswordHash = require('../src/Traits/PasswordHash')
-      return new PasswordHash()
-    })
-    this.app.alias('Adonis/Addons/IgorTrinidadPasswordHash', 'IgorTrinidad/PasswordHash')
 
   }
 }

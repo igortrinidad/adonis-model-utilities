@@ -224,6 +224,25 @@ class User {
 
 ##### this trait apply a setter to the column formating the fullName for the on saving
 
+### Parse Number Trait:
+
+Add trait to the model and set the field that should be ParseNumber:
+```js
+class User {
+
+  static super () {
+    super.boot()
+
+    /**
+     * Parse Number
+     */
+    this.addTrait('@provider:IgorTrinidad/ParseNumber', { fields: ['value_one', 'value_two'] })
+  }
+
+}
+```
+##### this trait apply a getter on defined fields to parse numbers, this may be necessary if your db engine are formating number columns with too much zero decimals as string
+
 
 ## Built With
 
