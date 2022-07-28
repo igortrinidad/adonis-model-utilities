@@ -59,7 +59,7 @@ class ParseNumber {
    */
   getter () {
     return (value) => {
-      return value === null ? null : parseFloat(value)
+      return [null, ''].includes(value) ? value : parseFloat(value)
     }
   }
 
